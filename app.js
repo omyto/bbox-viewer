@@ -143,7 +143,7 @@ function tile2lon(x,z) {
   let polyline = new map4d.Polyline({
     path: global.path,
     strokeColor: "#ff0000",
-    strokeOpacity: 0.5,
+    strokeOpacity: 1.0,
     strokeWidth: 1
   })
   global.polyline = polyline
