@@ -90,6 +90,7 @@ function tile2lon(x,z) {
     [tileTopLeftBox.west, tileBottomRightBox.south],
     [tileTopLeftBox.west, tileTopLeftBox.north]
   ]
+  console.log(global.path)
   return true
  }
 
@@ -124,6 +125,11 @@ function tile2lon(x,z) {
       dropdown.click()
     }
   })
+ }
+
+ function tapBuilding() {
+   let enable = global.map.isObjectsEnabled()
+   global.map.setObjectsEnabled(!enable)
  }
 
  function tapCenter() {
