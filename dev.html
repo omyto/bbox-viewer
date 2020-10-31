@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="semantic/semantic.min.css">
+        <link rel="stylesheet" type="text/css" href="semantic/components/dropdown.min.css">
+        <link rel="stylesheet" type="text/css" href="semantic/components/form.min.css">
+        <link rel="stylesheet" href="styles.css">
+        <script
+        src="https://code.jquery.com/jquery-3.1.1.min.js"
+        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+        crossorigin="anonymous"></script>
+        <script src="semantic/semantic.min.js"></script>
+        <script src="semantic/components/dropdown.min.js"></script>
+        <script src="semantic/components/form.min.js"></script>
+    </head>
+<body>
+    <div id="map"></div>
+    <div id="ui">
+        <button id="hide-button" onclick="hideControl()" class="circular ui icon button">
+            <i class="icon eye slash outline"></i>
+          </button>
+          <div class="ui form">
+            <div class="field">
+              <label>Location 1</label>
+              <div id="location1" class="two fields">
+                <div class="field">
+                  <input class='latitude' placeholder="Latitude">
+                </div>
+                <div class="field">
+                  <input class="longitude" placeholder="Longitude">
+                </div>
+              </div>
+              <label>Location 2</label>
+              <div id="location2" class="two fields">
+                <div class="field">
+                  <input class="latitude" placeholder="Latitude">
+                </div>
+                <div class="field">
+                  <input class="longitude" placeholder="Longitude">
+                </div>
+              </div>
+            </div>
+            <div class="field">
+              <label>Camera</label>
+              <div class="fields">
+                <div class="four wide field">
+                  <input id="zoom" type="text" placeholder="zoom">
+                </div>
+                <div class="four wide field">
+                    <button onclick="tapCenter()" class="ui primary basic button">Center</button>
+                </div>
+                <div class="ten wide field">
+                    <button onclick="tapReset()" class="ui primary basic button">Reset Bearing & Tilt</button>
+                </div>
+              </div>
+            </div>            
+        </div>
+    </div>
+    <div class="ui dropdown">
+        <div class="menu">
+          <div onclick="contextOption(0)" class="item">Show/hide control</div>
+          <div onclick="contextOption(1)" class="item">Pick as location 1</div>
+          <div onclick="contextOption(2)" class="item">Pick as location 2</div>
+        </div>
+      </div>
+    <script src="./map4dsdk@1.4.9.dev.js"></script>
+    <script src="./app.js"></script>
+    <script>
+        function hideControl() {
+            $('#ui').transition('scale')
+        }
+        $( document ).ready(function() {
+            $('.ui.dropdown').dropdown().css({top: -1, left: -1})
+        });
+    </script>
+</body>
+</html>
