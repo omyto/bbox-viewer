@@ -90,7 +90,7 @@ function tile2lon(x,z) {
     [tileTopLeftBox.west, tileBottomRightBox.south],
     [tileTopLeftBox.west, tileTopLeftBox.north]
   ]
-  console.log(global.path)
+  $("#bbox").text(tileTopLeftBox.west + ' ' + ' ' + tileBottomRightBox.south +' '+ tileBottomRightBox.east + ' ' + tileTopLeftBox.north );
   return true
  }
 
