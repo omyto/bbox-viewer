@@ -130,6 +130,7 @@ function tile2lon(x,z) {
  function tapBuilding() {
    let enable = global.map.isObjectsEnabled()
    global.map.setObjectsEnabled(!enable)
+   global.map.setPlacesEnabled(!enable)
  }
 
  function tapCenter() {
