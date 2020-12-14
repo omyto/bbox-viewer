@@ -107,8 +107,7 @@ function tile2lon(x,z) {
   )
   global.map = map
   //set switch mode Auto for automatically switching between 2D & 3D
-  console.log("initMap")
-  map.setSwitchMode(map4d.SwitchMode.Auto3DTo2D)
+  console.log("initMap")  
   map.enable3dMode(true)
 
   map.addListener("rightClick", (args) => {
