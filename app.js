@@ -98,11 +98,12 @@ function tile2lon(x,z) {
   let map = new map4d.Map(document.getElementById("map"),
   {
     center: [105.828042, 21.007651],
-    zoom: 17,
-    geolocate: true,
-    controls : false,
+    zoom: 17,    
     tilt: 0,        
-    accessKey: `208e1c99aa440d8bc2847aafa3bc0669`
+    accessKey: `208e1c99aa440d8bc2847aafa3bc0669`,
+    controls: true,
+    geolocate: true,
+    controlOptions: map4d.ControlOptions.BOTTOM_RIGHT
   }
   )
   global.map = map
