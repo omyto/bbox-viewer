@@ -129,9 +129,9 @@ function tile2lon(x,z) {
  }
 
  function tapBuilding() {
-   let enable = global.map.isObjectsEnabled()
-   global.map.setObjectsEnabled(!enable)
-   global.map.setPlacesEnabled(!enable)
+   let enable = global.map.isBuildingsEnabled;
+   global.map.setBuildingsEnabled(!enable)
+   global.map.setPOIsEnabled(!enable)
  }
 
  function tapCenter() {
