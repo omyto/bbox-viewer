@@ -210,7 +210,7 @@ var createImage = function (location0, location1, zoom) {
           let offsetX = (x - minx) * 256;
           let offsetY = (y - miny) * 256;
           sources.push({
-		  src: `http://api-dev.map4d.vn/map/tile/mbd/${zoom}/${x}/${y}`, 
+		  src: `${server}/${zoom}/${x}/${y}.png`, 
               x: offsetX,
               y: offsetY });
       }
