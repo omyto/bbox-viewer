@@ -1,22 +1,22 @@
-function lon2tile(lon,zoom) { return (Math.floor((lon+180)/360*Math.pow(2,zoom))); }
-function lat2tile(lat,zoom)  { return (Math.floor((1-Math.log(Math.tan(lat*Math.PI/180) + 1/Math.cos(lat*Math.PI/180))/Math.PI)/2 *Math.pow(2,zoom))); }
-function tile2lon(x,z) {
-  return (x/Math.pow(2,z)*360-180);
- }
- function tile2lat(y,z) {
-  var n=Math.PI-2*Math.PI*y/Math.pow(2,z);
-  return (180/Math.PI*Math.atan(0.5*(Math.exp(n)-Math.exp(-n))));
- }
- function tile2bbox(tile) {
-   return {
+function lon2tile(lon, zoom) { return (Math.floor((lon + 180) / 360 * Math.pow(2, zoom))); }
+function lat2tile(lat, zoom) { return (Math.floor((1 - Math.log(Math.tan(lat * Math.PI / 180) + 1 / Math.cos(lat * Math.PI / 180)) / Math.PI) / 2 * Math.pow(2, zoom))); }
+function tile2lon(x, z) {
+  return (x / Math.pow(2, z) * 360 - 180);
+}
+function tile2lat(y, z) {
+  var n = Math.PI - 2 * Math.PI * y / Math.pow(2, z);
+  return (180 / Math.PI * Math.atan(0.5 * (Math.exp(n) - Math.exp(-n))));
+}
+function tile2bbox(tile) {
+  return {
     north: tile2lat(tile.y, tile.zoom),
     south: tile2lat(tile.y + 1, tile.zoom),
     west: tile2lon(tile.x, tile.zoom),
     east: tile2lon(tile.x + 1, tile.zoom),
-   }
- }
+  }
+}
 
- var global = {
+var global = {
   location: {},
   location1: null,
   location2: null,
@@ -24,9 +24,9 @@ function tile2lon(x,z) {
   zoom: 0,
   polyline: null,
   map: null,
- }
+}
 
- function setup() {
+function setup() {
   let tile1 = {
     x: 104066,
     y: 57709,
@@ -90,21 +90,21 @@ function tile2lon(x,z) {
     [tileTopLeftBox.west, tileBottomRightBox.south],
     [tileTopLeftBox.west, tileTopLeftBox.north]
   ]
-  $("#bbox").text(tileTopLeftBox.west + ' ' + ' ' + tileBottomRightBox.south +' '+ tileBottomRightBox.east + ' ' + tileTopLeftBox.north );
+  $("#bbox").text(tileTopLeftBox.west + ' ' + ' ' + tileBottomRightBox.south + ' ' + tileBottomRightBox.east + ' ' + tileTopLeftBox.north);
   return true
- }
+}
 
- function initMap() {
+function initMap() {
   let map = new map4d.Map(document.getElementById("map"),
-  {
-    center: [105.828042, 21.007651],
-    zoom: 17,    
-    tilt: 0,        
-    accessKey: `208e1c99aa440d8bc2847aafa3bc0669`,
-    controls: true,
-    geolocate: true,
-    controlOptions: map4d.ControlOptions.BOTTOM_RIGHT
-  }
+    {
+      center: [108.225184, 16.071966],
+      zoom: 17,
+      tilt: 0,
+      accessKey: `208e1c99aa440d8bc2847aafa3bc0669`,
+      controls: true,
+      geolocate: true,
+      controlOptions: map4d.ControlOptions.BOTTOM_RIGHT
+    }
   )
   global.map = map
   //set switch mode Auto for automatically switching between 2D & 3D
@@ -114,8 +114,8 @@ function tile2lon(x,z) {
 
   map.addListener("rightClick", (args) => {
     console.log(args)
-    global.location = {...args.location}
-    $('.ui.dropdown').css({top: args.pixel.y - 15, left: args.pixel.x});
+    global.location = { ...args.location }
+    $('.ui.dropdown').css({ top: args.pixel.y - 15, left: args.pixel.x });
     $('.ui.dropdown').click()
   })
 
@@ -126,21 +126,21 @@ function tile2lon(x,z) {
       dropdown.click()
     }
   })
- }
+}
 
- function tapBuilding() {
-   let enable = global.map.isBuildingsEnabled;
-   global.map.setBuildingsEnabled(!enable)
-   global.map.setPOIsEnabled(!enable)
- }
+function tapBuilding() {
+  let enable = global.map.isBuildingsEnabled;
+  global.map.setBuildingsEnabled(!enable)
+  global.map.setPOIsEnabled(!enable)
+}
 
- function tapCenter() {
-   if (!setup()) {
+function tapCenter() {
+  if (!setup()) {
     return
-   }
-   if (global.polyline != null) {
-     global.polyline.setMap(null)
-   }
+  }
+  if (global.polyline != null) {
+    global.polyline.setMap(null)
+  }
 
   let polyline = new map4d.Polyline({
     path: global.path,
@@ -156,16 +156,16 @@ function tile2lon(x,z) {
   camera.setTilt(0)
   camera.setZoom(global.zoom)
   global.map.moveCamera(camera)
- }
+}
 
- function tapReset() {
+function tapReset() {
   let camera = global.map.getCamera()
   camera.setBearing(0)
   camera.setTilt(0)
   global.map.moveCamera(camera)
- }
+}
 
- function contextOption(option){
+function contextOption(option) {
   switch (option) {
     case 0:
       $('#ui').transition('scale')
@@ -179,9 +179,9 @@ function tile2lon(x,z) {
       $("#location2 .longitude").val(global.location.lng)
       break;
   }
- }
+}
 
- 
+
 var createImage = function (location0, location1, zoom) {
   let server = "http://rtile.map4d.vn/all/2d";
   if (!global.map) {
@@ -193,7 +193,7 @@ var createImage = function (location0, location1, zoom) {
   }
 
   let width = 1;
-  let height = 1;    
+  let height = 1;
   let sources = [];
   let x0 = lon2tile(location0.lng, zoom);
   let y0 = lat2tile(location0.lat, zoom);
@@ -206,101 +206,102 @@ var createImage = function (location0, location1, zoom) {
   width = 256 * (maxx - minx + 1);
   height = 256 * (maxy - miny + 1);
   for (let x = minx; x <= maxx; x += 1) {
-      for (let y = miny; y <= maxy; y += 1) {
-          let offsetX = (x - minx) * 256;
-          let offsetY = (y - miny) * 256;
-          sources.push({
-		  src: `${server}/${zoom}/${x}/${y}.png`, 
-              x: offsetX,
-              y: offsetY });
-      }
-  }    
+    for (let y = miny; y <= maxy; y += 1) {
+      let offsetX = (x - minx) * 256;
+      let offsetY = (y - miny) * 256;
+      sources.push({
+        src: `${server}/${zoom}/${x}/${y}.png`,
+        x: offsetX,
+        y: offsetY
+      });
+    }
+  }
   mergeImages(sources, {
-      width: width,
-      height: height
-    })
-      .then(b64 => downloadBase64(b64));
+    width: width,
+    height: height
+  })
+    .then(b64 => downloadBase64(b64));
 }
 
-var downloadBase64 = function(data) {    
+var downloadBase64 = function (data) {
   var a = document.createElement("a"); //Create <a>
   a.href = data; //Image Base64 Goes here
-  a.download = "SuaDepTrai.png"; //File name Here
+  a.download = `${Date.now().toString()}.png`; //File name Here
   a.click();
 }
 
-var tapExport = function () {  
+var tapExport = function () {
   createImage(global.location1, global.location2, global.zoom);
 }
 
 
 // Defaults
 const defaultOptions = {
-format: 'image/png',
-quality: 1.0,
-width: undefined,
-height: undefined,
-Canvas: undefined,
-crossOrigin: "Anonymous"
+  format: 'image/png',
+  quality: 1.0,
+  width: undefined,
+  height: undefined,
+  Canvas: undefined,
+  crossOrigin: "Anonymous"
 };
 
 // Return Promise
 const mergeImages = (sources = [], options = {}) => new Promise(resolve => {
-options = Object.assign({}, defaultOptions, options);
+  options = Object.assign({}, defaultOptions, options);
 
-// Setup browser/Node.js specific variables
-const canvas = options.Canvas ? new options.Canvas() : window.document.createElement('canvas');
-const Image = options.Image || window.Image;
+  // Setup browser/Node.js specific variables
+  const canvas = options.Canvas ? new options.Canvas() : window.document.createElement('canvas');
+  const Image = options.Image || window.Image;
 
-// Load sources
-const images = sources.map(source => new Promise((resolve, reject) => {
-  // Convert sources to objects
-  if (source.constructor.name !== 'Object') {
-    source = { src: source };
-  }
-
-  // Resolve source and img when loaded
-  const img = new Image();
-  img.crossOrigin = options.crossOrigin;
-  img.onerror = () => reject(new Error('Couldn\'t load image'));
-  img.onload = () => resolve(Object.assign({}, source, { img }));
-  img.src = source.src;
-}));
-
-// Get canvas context
-const ctx = canvas.getContext('2d');
-
-// When sources have loaded
-resolve(Promise.all(images)
-  .then(images => {
-    // Set canvas dimensions
-    const getSize = dim => options[dim] || Math.max(...images.map(image => image.img[dim]));
-    canvas.width = getSize('width');
-    canvas.height = getSize('height');
-
-    // Draw images to canvas
-    images.forEach(image => {
-      ctx.globalAlpha = image.opacity ? image.opacity : 1;
-      return ctx.drawImage(image.img, image.x || 0, image.y || 0);
-    });
-
-    if (options.Canvas && options.format === 'image/jpeg') {
-      // Resolve data URI for node-canvas jpeg async
-      return new Promise((resolve, reject) => {
-        canvas.toDataURL(options.format, {
-          quality: options.quality,
-          progressive: false
-        }, (err, jpeg) => {
-          if (err) {
-            reject(err);
-            return;
-          }
-          resolve(jpeg);
-        });
-      });
+  // Load sources
+  const images = sources.map(source => new Promise((resolve, reject) => {
+    // Convert sources to objects
+    if (source.constructor.name !== 'Object') {
+      source = { src: source };
     }
 
-    // Resolve all other data URIs sync
-    return canvas.toDataURL(options.format, options.quality);
+    // Resolve source and img when loaded
+    const img = new Image();
+    img.crossOrigin = options.crossOrigin;
+    img.onerror = () => reject(new Error('Couldn\'t load image'));
+    img.onload = () => resolve(Object.assign({}, source, { img }));
+    img.src = source.src;
   }));
+
+  // Get canvas context
+  const ctx = canvas.getContext('2d');
+
+  // When sources have loaded
+  resolve(Promise.all(images)
+    .then(images => {
+      // Set canvas dimensions
+      const getSize = dim => options[dim] || Math.max(...images.map(image => image.img[dim]));
+      canvas.width = getSize('width');
+      canvas.height = getSize('height');
+
+      // Draw images to canvas
+      images.forEach(image => {
+        ctx.globalAlpha = image.opacity ? image.opacity : 1;
+        return ctx.drawImage(image.img, image.x || 0, image.y || 0, 256, 256);
+      });
+
+      if (options.Canvas && options.format === 'image/jpeg') {
+        // Resolve data URI for node-canvas jpeg async
+        return new Promise((resolve, reject) => {
+          canvas.toDataURL(options.format, {
+            quality: options.quality,
+            progressive: false
+          }, (err, jpeg) => {
+            if (err) {
+              reject(err);
+              return;
+            }
+            resolve(jpeg);
+          });
+        });
+      }
+
+      // Resolve all other data URIs sync
+      return canvas.toDataURL(options.format, options.quality);
+    }));
 });
